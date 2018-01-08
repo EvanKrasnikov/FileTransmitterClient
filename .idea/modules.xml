@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/FileTransmitterClient.iml" filepath="$PROJECT_DIR$/.idea/FileTransmitterClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FileTransmitterJavaFx.iml" filepath="$PROJECT_DIR$/FileTransmitterJavaFx.iml" />
     </modules>
   </component>
 </project>
