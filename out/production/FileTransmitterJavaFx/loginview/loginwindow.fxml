@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity"
+            maxWidth="-Infinity"
+            minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="400.0"
+            prefWidth="600.0"
+            style="-fx-background-color: C8E6C9;"
+            xmlns="http://javafx.com/javafx/8.0.141"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="loginview.LoginController">
+   <children>
+      <JFXPasswordField id="passField" fx:id="passField" layoutX="226.0" layoutY="255.0" promptText="user password">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+      </JFXPasswordField>
+
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
+
+      <JFXTextField id="loginField" fx:id="loginField" layoutX="226.0" layoutY="215.0" promptText="user login">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+      </JFXTextField>
+
+      <JFXButton id="loginButton" fx:id="loginButton" layoutX="275.0" layoutY="334.0" onAction="#loginAction" style="-fx-background-color: #4CAF50;" text="Login">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+      </JFXButton>
+
+      <JFXCheckBox id="rememberLogin" fx:id="rememberLogin" layoutX="245.0" layoutY="299.0" text="remember">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+      </JFXCheckBox>
+
+      <JFXButton id="registerButton" fx:id="registerButton" layoutX="507.0" layoutY="22.0" onAction="#registerAction" style="-fx-background-color: #4CAF50;" text="Register">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

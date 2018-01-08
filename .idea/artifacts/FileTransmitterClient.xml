@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="FileTransmitterClient">
+    <output-path>$PROJECT_DIR$/out/artifacts/FileTransmitterClient</output-path>
+    <root id="root">
+      <element id="archive" name="FileTransmitterClient.jar">
+        <element id="module-output" name="FileTransmitterClient" />
+      </element>
+    </root>
+  </artifact>
+</component>
