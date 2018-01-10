@@ -1,4 +1,4 @@
-package programview;
+package controllers;
 
 import client.Sender;
 import com.jfoenix.controls.JFXButton;
@@ -27,7 +27,8 @@ public class ProgramController extends Sender {
         super(channel);
     }
 
-    public void add(ActionEvent event) throws IOException{
+    @FXML
+    private void add(ActionEvent event) throws IOException{
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         textArea.clear();
