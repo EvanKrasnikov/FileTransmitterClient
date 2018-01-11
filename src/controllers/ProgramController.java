@@ -7,6 +7,8 @@ import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -15,29 +17,19 @@ import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 
-public class ProgramController extends Sender {
+public class ProgramController{
     @FXML
-    private JFXButton add;
+    private Button addFiles;
     @FXML
     private JFXHamburger settings;
-    @FXML
-    private JFXTextArea textArea;
-
-    public ProgramController(SocketChannel channel){
-        super(channel);
-    }
 
     @FXML
     private void add(ActionEvent event) throws IOException{
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FileChooser fileChooser = new FileChooser();
-        textArea.clear();
-        List<File> files = fileChooser.showOpenMultipleDialog(stage);
-        super.sendFile(files);
+        //todo
     }
 
     @FXML
-    private void settings(ActionEvent event){
+    private void sett(MouseEvent event){
         //todo
     }
 }

@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+import java.net.URL;
 
 public class LoginController extends Client {
     @FXML
@@ -31,11 +31,32 @@ public class LoginController extends Client {
     @FXML
     private void loginAction(ActionEvent event) throws IOException{
         Stage stage;
-        Parent root;
+        Parent root = null;
+        String sceneFile = "/resources/Program.fxml";
+        URL url  = null;
+
+        try
+        {
+            url  = getClass().getResource( sceneFile );
+            root = FXMLLoader.load( url );
+            System.out.println( "  fxmlResource = " + sceneFile );
+        }
+        catch ( Exception ex )
+        {
+            System.out.println( "Exception on FXMLLoader.load()" );
+            System.out.println( "  * url: " + url );
+            System.out.println( "  * " + ex );
+            System.out.println( "    ----------------------------------------\n" );
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
 
         if (event.getSource() == loginButton){
             stage = (Stage) loginButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("/resources/Program.fxml"));
+            //root = FXMLLoader.load(getClass().getClassLoader().getResource("/resources/Program.fxml"));
+
+
+
 
             if (loginField.getText().equals("") || passField.getText().equals("")){
                 System.out.println("Login and password fields are not filled");
