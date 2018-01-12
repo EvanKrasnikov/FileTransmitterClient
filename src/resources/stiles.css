@@ -1,0 +1,21 @@
+.background {
+    -fx-background-color: #C8E6C9;
+}
+
+.button {
+    -fx-background-color: #4CAF50;
+}
+
+.label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Calibri";
+    -fx-text-fill: white;
+    -fx-opacity: 0.6;
+}
+
+.label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Calibri";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
