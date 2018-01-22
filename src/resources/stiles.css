@@ -9,13 +9,18 @@
 .label {
     -fx-font-size: 14pt;
     -fx-font-family: "Calibri";
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-opacity: 0.6;
 }
 
 .label {
     -fx-font-size: 14pt;
     -fx-font-family: "Calibri";
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-opacity: 1;
+}
+
+.tree-table-row-cell:selected {
+    -fx-background-color: green;
+    -fx-table-cell-border-color: green;
 }
