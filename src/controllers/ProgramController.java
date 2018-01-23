@@ -26,7 +26,7 @@ public class ProgramController implements Initializable{
     @FXML
     private JFXHamburger humburger;
     @FXML
-    private BorderPane borderPane;
+    private BorderPane borderpane;
     @FXML
     private void add(ActionEvent event) throws IOException{
         //todo
@@ -53,6 +53,7 @@ public class ProgramController implements Initializable{
 
         for (File f: getFileList()){
             itemRoot.getChildren().add(new TreeItem<>(f));
+            System.out.println(f.getFileName() + " " + f.getSize() + " " + f.getEditionTime());
         }
 
         tableView.setRoot(itemRoot);
@@ -62,7 +63,7 @@ public class ProgramController implements Initializable{
 
     private ObservableList<File> getFileList() {
         ObservableList<File> users = FXCollections.observableArrayList();
-        users.add(new File("Computer Department", "23","CD 1"));
+        users.add(new File("Computer_Department", "23","CD_1"));
         users.add(new File("Sales Department", "22","Employee 1"));
         users.add(new File("Sales Department", "22","Employee 2"));
         users.add(new File("Sales Department", "25","Employee 4"));
