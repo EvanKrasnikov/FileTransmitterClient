@@ -35,6 +35,7 @@ public class LoginController extends Client {
         String sceneFile = "/resources/Program.fxml";
         URL url  = null;
 
+        //проверка загрузки FXML
         try
         {
             url  = getClass().getResource( sceneFile );
@@ -51,32 +52,12 @@ public class LoginController extends Client {
             throw ex;
         }
 
-        if (event.getSource() == loginButton){
-            stage = (Stage) loginButton.getScene().getWindow();
-            //root = FXMLLoader.load(getClass().getClassLoader().getResource("/resources/Program.fxml"));
+        Scene scene = new Scene(root);
+        stage = (Stage) loginButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
 
 
-
-
-            if (loginField.getText().equals("") || passField.getText().equals("")){
-                System.out.println("Login and password fields are not filled");
-            } else {
-                super.sendMessage("/login " + loginField.getText() + " " + passField.getText());
-
-                if (super.isAuthentified) {
-                    if (rememberLoginCheckBox.isSelected()) rememberLogin();
-                    System.out.println("Welcome! " + loginField.getText());
-                    stage.hide();
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                } else {
-                    loginField.clear();
-                    passField.clear();
-                    System.out.println("Sorry, invalid credentials");
-                }
-            }
-        }
 
 
     }
