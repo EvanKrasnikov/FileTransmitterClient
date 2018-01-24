@@ -4,12 +4,12 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class File extends RecursiveTreeObject<File> {
+public class FileEntry extends RecursiveTreeObject<FileEntry> {
     private StringProperty fileName;
     private StringProperty size;
     private StringProperty editionTime;
 
-    public File(String fileName, String size, String editionTime) {
+    public FileEntry(String fileName, String size, String editionTime) {
         this.fileName = new SimpleStringProperty(fileName) ;
         this.size = new SimpleStringProperty(size);
         this.editionTime = new SimpleStringProperty(editionTime);

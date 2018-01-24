@@ -11,7 +11,7 @@
       <AnchorPane fx:id="menuPanel" prefHeight="50.0" prefWidth="600.0" styleClass="button" stylesheets="@stiles.css" BorderPane.alignment="CENTER">
          <children>
             <JFXHamburger fx:id="humburger" layoutX="14.0" layoutY="15.0" />
-            <JFXButton fx:id="addFiles" layoutX="534.0" layoutY="13.0" />
+            <JFXButton fx:id="addFiles" layoutX="534.0" layoutY="13.0" onAction="#add"/>
          </children></AnchorPane>
    </top>
    <center>
