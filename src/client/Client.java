@@ -45,7 +45,8 @@ public class Client  {
     }
 
     protected void sendMessage(String message) throws IOException{
-        message.getBytes();
+        byte[] bytes =  message.getBytes();
+        buffer.get(bytes);
         channel.write(buffer);
         buffer.clear();
     }

@@ -17,7 +17,7 @@ public class MessageHandler extends Client {
             }
 
             case "/loginisoccupied": {
-                System.out.println("Login is occupied. Enter a unique loginview, please ");
+                System.out.println("Login is occupied. Enter a unique login, please ");
             }
 
             case "/transitioncomplete": {
