@@ -20,7 +20,7 @@ public class LoginController extends Client {
     @FXML
     private JFXButton loginButton;
     @FXML
-    private JFXCheckBox rememberLoginCheckBox;
+    private JFXCheckBox rememberLogin;
     @FXML
     private JFXButton registerButton;
     @FXML
@@ -70,7 +70,7 @@ public class LoginController extends Client {
         if (loginField.getText().equals("") || passField.getText().equals("")){
             System.out.println("Login and password fields are not filled");
         } else {
-            if (rememberLoginCheckBox.isSelected()) rememberLogin();
+            if (rememberLogin.isSelected()) rememberLogin();
             super.sendMessage("/register " + loginField.getText() + " " + passField.getText());
             System.out.println("Welcome! " + loginField.getText());
         }
@@ -79,5 +79,7 @@ public class LoginController extends Client {
     @FXML
     private void rememberLogin(){
         //todo
+        loginField.setPromptText(loginField.getText());
+        passField.setPromptText(passField.getText());
     }
 }
