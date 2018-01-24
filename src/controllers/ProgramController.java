@@ -2,6 +2,7 @@ package controllers;
 
 import client.FileEntry;
 import client.Sender;
+
 import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,11 +16,12 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static client.Format.getFormattedDate;
+import static client.Format.getFormattedSizeOfFile;
 
 public class ProgramController implements Initializable{
     private TreeItem<FileEntry> itemRoot;
@@ -32,9 +34,12 @@ public class ProgramController implements Initializable{
     @FXML
     private JFXButton addFiles;
     @FXML
+    private JFXButton sendFiles;
+    @FXML
     private JFXHamburger humburger;
     @FXML
     private BorderPane borderpane;
+
     @FXML
     private void add(ActionEvent event) throws IOException{ // добавление файлов в таблицу для отображения
         FileChooser chooser = new FileChooser();
@@ -49,6 +54,7 @@ public class ProgramController implements Initializable{
         }
     }
 
+    @FXML
     private void send(){ // вызов метода передачи файлов
         Sender sender = new Sender();
         sender.sendFile(prepList);
@@ -76,21 +82,5 @@ public class ProgramController implements Initializable{
         tableView.setRoot(itemRoot);
         tableView.setShowRoot(false);
         tableView.setEditable(false);
-    }
-
-    private static String getFormattedSizeOfFile(long size){ // форматированный размер файла
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
-        float sizeKb = 1024.0f;
-        float sizeMb = sizeKb * sizeKb;
-        float sizeGb = sizeMb * sizeKb;
-
-        if (size > sizeMb) return decimalFormat.format(size / sizeMb) + " Mb";
-        else if (size > sizeGb) return decimalFormat.format(size / sizeGb) + " Gb";
-        return decimalFormat.format(size / sizeKb) + " Kb";
-    }
-
-    private static String getFormattedDate(long date){ //форматированая дата
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        return dateFormat.format(date);
     }
 }
