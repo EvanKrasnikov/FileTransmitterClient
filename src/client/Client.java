@@ -11,7 +11,7 @@ public class Client  {
     private Selector selector;
     private SocketChannel channel;
     private static final String ADRESS = "localhost";
-    private static final int PORT = 5050;
+    private static final int PORT = 8189;
 
     private static final int MESSAGE_BUFFER = 64;
     protected Boolean isAuthentified = false;
