@@ -12,23 +12,23 @@ public class Sender{
     private static final int FILE_BUFFER = 4096;
     private SocketChannel channel;
 
-    public Sender(SocketChannel channel){
-        this.channel = channel;
-    }
+    public void sendFile(List<File> files) {
+        try {
+            for (File file: files){
+                Path path = file.toPath();
+                FileChannel fileChannel = FileChannel.open(path);
+                ByteBuffer buffer = ByteBuffer.allocate(FILE_BUFFER);
 
-    public void sendFile(List<File> files) throws IOException {
-        for (File file: files){
-            Path path = file.toPath();
-            FileChannel fileChannel = FileChannel.open(path);
-            ByteBuffer buffer = ByteBuffer.allocate(FILE_BUFFER);
+                while (fileChannel.read(buffer) > 0){
+                    buffer.flip();
+                    channel.write(buffer);
+                    buffer.clear();
+                }
 
-            while (fileChannel.read(buffer) > 0){
-                buffer.flip();
-                channel.write(buffer);
-                buffer.clear();
+                fileChannel.close();
             }
-
-            fileChannel.close();
+        } catch (IOException e) {
+            System.err.println(Sender.class.getName() + "Can't send files");
         }
     }
 }
