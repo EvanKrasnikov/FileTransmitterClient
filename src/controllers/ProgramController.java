@@ -1,6 +1,7 @@
 package controllers;
 
 import client.FileEntry;
+import client.Sender;
 import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,11 +17,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProgramController implements Initializable{
     private TreeItem<FileEntry> itemRoot;
+    private List<File> prepList = new ArrayList<>();
 
     @FXML
     private AnchorPane menuPanel;
@@ -33,9 +36,10 @@ public class ProgramController implements Initializable{
     @FXML
     private BorderPane borderpane;
     @FXML
-    private void add(ActionEvent event) throws IOException{
+    private void add(ActionEvent event) throws IOException{ // добавление файлов в таблицу для отображения
         FileChooser chooser = new FileChooser();
         List<File> files = chooser.showOpenMultipleDialog(tableView.getScene().getWindow());
+        prepList.addAll(files);
 
         for (File f: files){
             FileEntry fileEntry = new FileEntry(f.getName(),getFormattedSizeOfFile(f.length()),getFormattedDate(f.lastModified()));
@@ -45,8 +49,14 @@ public class ProgramController implements Initializable{
         }
     }
 
+    private void send(){ // вызов метода передачи файлов
+        Sender sender = new Sender();
+        sender.sendFile(prepList);
+        prepList.clear();
+    }
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) { // загрузка страницы
         JFXTreeTableColumn<FileEntry, String> nameColumn = new JFXTreeTableColumn<>("Name");
         JFXTreeTableColumn<FileEntry, String> sizeColumn = new JFXTreeTableColumn<>("Size");
         JFXTreeTableColumn<FileEntry, String> editionTimeColumn = new JFXTreeTableColumn<>("Last change");
@@ -68,7 +78,7 @@ public class ProgramController implements Initializable{
         tableView.setEditable(false);
     }
 
-    private String getFormattedSizeOfFile(long size){
+    private static String getFormattedSizeOfFile(long size){ // форматированный размер файла
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         float sizeKb = 1024.0f;
         float sizeMb = sizeKb * sizeKb;
@@ -79,7 +89,7 @@ public class ProgramController implements Initializable{
         return decimalFormat.format(size / sizeKb) + " Kb";
     }
 
-    private String getFormattedDate(long date){
+    private static String getFormattedDate(long date){ //форматированая дата
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         return dateFormat.format(date);
     }
