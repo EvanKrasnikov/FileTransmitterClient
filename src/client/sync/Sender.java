@@ -34,7 +34,7 @@ public class Sender {
         }
     }
 
-    protected void sendMessage(String message){
+    public void sendMessage(String message){
         try {
             byte[] bytes =  message.getBytes();
             buffer.get(bytes);
