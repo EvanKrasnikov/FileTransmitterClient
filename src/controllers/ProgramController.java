@@ -5,21 +5,15 @@ import client.Sender;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-import com.jfoenix.transitions.hamburger.HamburgerTransition;
-import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +26,7 @@ import static client.Format.getFormattedDate;
 import static client.Format.getFormattedSizeOfFile;
 
 public class ProgramController implements Initializable{
-    private TreeItem<FileEntry> itemRoot;
+    private TreeItem<FileEntry> itemRoot = new TreeItem<>();
     private List<File> prepList = new ArrayList<>();
 
     @FXML
@@ -50,6 +44,10 @@ public class ProgramController implements Initializable{
 
     @FXML
     private void add(ActionEvent event) throws IOException{ // добавление файлов в таблицу для отображения
+        tableView.setRoot(itemRoot);
+        tableView.setShowRoot(false);
+        tableView.setEditable(false);
+
         FileChooser chooser = new FileChooser();
         List<File> files = chooser.showOpenMultipleDialog(tableView.getScene().getWindow());
         prepList.addAll(files);
@@ -59,6 +57,7 @@ public class ProgramController implements Initializable{
             TreeItem<FileEntry> item = new TreeItem<>(fileEntry);
             itemRoot.getChildren().add(item);
             System.out.println(fileEntry.getFileName() + " " + fileEntry.getSize() + " " + fileEntry.getEditionTime());
+            System.out.println(itemRoot.getChildren().toString());
         }
     }
 
@@ -73,32 +72,33 @@ public class ProgramController implements Initializable{
     private void showMenu(MouseEvent event){
         HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(humburger);
         burgerTask.setRate(-1);
-        //humburger.getAnimation();
         burgerTask.setRate(burgerTask.getRate() * -1);
         burgerTask.play();
-
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { // загрузка страницы
+    public void initialize(URL location, ResourceBundle resources) { // загрузка столбцов
+        tableView.getColumns().addAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
+    }
+
+    private static TreeTableColumn<FileEntry, String> getNameColumn(){
         JFXTreeTableColumn<FileEntry, String> nameColumn = new JFXTreeTableColumn<>("Name");
-        JFXTreeTableColumn<FileEntry, String> sizeColumn = new JFXTreeTableColumn<>("Size");
-        JFXTreeTableColumn<FileEntry, String> editionTimeColumn = new JFXTreeTableColumn<>("Last change");
-
-        nameColumn.setPrefWidth(300);
-        sizeColumn.setPrefWidth(100);
-        editionTimeColumn.setPrefWidth(200);
-
-        // Get value from property of FileEntry class
         nameColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("Name"));
+        nameColumn.setPrefWidth(300);
+        return nameColumn;
+    }
+
+    private static TreeTableColumn<FileEntry, String> getSizeColumn(){
+        JFXTreeTableColumn<FileEntry, String> sizeColumn = new JFXTreeTableColumn<>("Size");
         sizeColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("Size"));
+        sizeColumn.setPrefWidth(100);
+        return sizeColumn;
+    }
+
+    private static TreeTableColumn<FileEntry, String> getEditionTimeColumn(){
+        JFXTreeTableColumn<FileEntry, String> editionTimeColumn = new JFXTreeTableColumn<>("Last change");
         editionTimeColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("Time"));
-
-        tableView.getColumns().addAll(nameColumn, sizeColumn, editionTimeColumn);
-
-        itemRoot = new TreeItem<>();
-        tableView.setRoot(itemRoot);
-        tableView.setShowRoot(false);
-        tableView.setEditable(false);
+        editionTimeColumn.setPrefWidth(200);
+        return editionTimeColumn;
     }
 }
