@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="Menu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="200.0" styleClass="background" stylesheets="@stiles.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+   <children>
+      <JFXButton fx:id="showLocalFiles" layoutY="103.0" prefHeight="36.0" prefWidth="200.0" text="Show files on computer" />
+      <JFXButton fx:id="showServerFiles" layoutY="159.0" prefHeight="32.0" prefWidth="200.0" text="Show files on server" />
+      <JFXHamburger fx:id="menuHumburger" layoutX="14.0" layoutY="13.0" />
+   </children>
+</AnchorPane>
