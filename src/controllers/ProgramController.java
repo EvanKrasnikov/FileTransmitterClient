@@ -4,14 +4,22 @@ import client.FileEntry;
 import client.Sender;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import com.jfoenix.transitions.hamburger.HamburgerTransition;
+import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,6 +67,16 @@ public class ProgramController implements Initializable{
         Sender sender = new Sender();
         sender.sendFile(prepList);
         prepList.clear();
+    }
+
+    @FXML
+    private void showMenu(MouseEvent event){
+        HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(humburger);
+        burgerTask.setRate(-1);
+        //humburger.getAnimation();
+        burgerTask.setRate(burgerTask.getRate() * -1);
+        burgerTask.play();
+
     }
 
     @Override
