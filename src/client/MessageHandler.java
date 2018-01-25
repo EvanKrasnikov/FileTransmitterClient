@@ -1,27 +1,31 @@
 package client;
 
-public class MessageHandler extends Client {
+public class MessageHandler extends Client implements Messages {
     public void parseMessage(String request) {
         switch (request) {
-            case "/nosuchuser": {
+            case NO_SUCH_USER: {
                 System.out.println("Enter a unique loginview, please/");
             }
 
-            case "/correctpass": {
+            case CORRECT_PASS: {
                 setIsAuthentified(true);
                 System.out.println("Login and pass are correct");
             }
 
-            case "/incorrectpass": {
+            case INCORRECT_PASS: {
                 System.out.println("Login or password is incorrect. Try again");
             }
 
-            case "/loginisoccupied": {
+            case LOGIN_IS_OCCUPIED: {
                 System.out.println("Login is occupied. Enter a unique login, please ");
             }
 
-            case "/transitioncomplete": {
+            case TRANSITION_COMPLETE: {
                 System.out.println("File transition completed");
+            }
+
+            case LIST_OF_FILES : {
+                System.out.println("Files list received");
             }
 
             default: {
