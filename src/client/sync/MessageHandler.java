@@ -2,9 +2,12 @@ package client.sync;
 
 import client.Client;
 
+import java.util.concurrent.ConcurrentLinkedDeque;
+
 public class MessageHandler extends Client implements Messages {
-    public void parseMessage(String request) {
-        switch (request) {
+    public void parseMessage(ConcurrentLinkedDeque<String> request) {
+        String s = request.pop();
+        switch (s) {
             case NO_SUCH_USER: {
                 System.out.println("Enter a unique loginview, please/");
             }
