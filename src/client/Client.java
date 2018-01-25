@@ -1,8 +1,11 @@
 package client;
 
+import client.sync.MessageHandler;
+import client.sync.Receiver;
+import client.sync.Sender;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -12,10 +15,8 @@ public class Client  {
     private SocketChannel channel;
     private static final String ADRESS = "localhost";
     private static final int PORT = 8189;
-
-    private static final int MESSAGE_BUFFER = 64;
     protected Boolean isAuthentified = false;
-    private ByteBuffer buffer = ByteBuffer.allocate(MESSAGE_BUFFER);
+    protected Boolean terminateConnection = false;
 
     public Client(){
         try {
@@ -26,8 +27,10 @@ public class Client  {
             channel.register(selector, SelectionKey.OP_CONNECT, SelectionKey.OP_READ);
             if (channel.isConnected()){
                 MessageHandler messageHandler = new MessageHandler();
-                while (true){
-                    messageHandler.parseMessage(receiveMessage());
+                Sender sender = new Sender(channel);
+                Receiver receiver = new Receiver(channel);
+                while (!terminateConnection){
+
                 }
             }
         } catch (IOException e) {
@@ -39,15 +42,5 @@ public class Client  {
         this.isAuthentified = isAuthentified;
     }
 
-    private String receiveMessage() throws IOException{
-        channel.write(buffer);
-        return buffer.toString();
-    }
 
-    protected void sendMessage(String message) throws IOException{
-        byte[] bytes =  message.getBytes();
-        buffer.get(bytes);
-        channel.write(buffer);
-        buffer.clear();
-    }
 }
