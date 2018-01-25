@@ -1,4 +1,6 @@
-package client;
+package client.sync;
+
+import client.Client;
 
 public class MessageHandler extends Client implements Messages {
     public void parseMessage(String request) {
@@ -24,7 +26,7 @@ public class MessageHandler extends Client implements Messages {
                 System.out.println("File transition completed");
             }
 
-            case LIST_OF_FILES : {
+            case GET_LIST : {
                 System.out.println("Files list received");
             }
 

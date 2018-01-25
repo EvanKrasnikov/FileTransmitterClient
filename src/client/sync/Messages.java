@@ -1,4 +1,4 @@
-package client;
+package client.sync;
 
 public interface Messages {
     String NO_SUCH_USER = "NO_SUCH_USER";
@@ -6,7 +6,12 @@ public interface Messages {
     String INCORRECT_PASS = "INCORRECT_PASS";
     String LOGIN_IS_OCCUPIED = "LOGIN_IS_OCCUPIED";
     String TRANSITION_COMPLETE = "TRANSITION_COMPLETE";
-    String LIST_OF_FILES = "LIST_OF_FILES";
+    String REGISTRATION_COMPLETED = "REGISTRATION_COMPLETED";
+    String REGISTER = "REGISTER";
+    String ADD = "ADD";
+    String REMOVE = "REMOVE";
+    String LOGIN = "LOGIN";
+    String GET_LIST = "GET_LIST";
 }
 
 
