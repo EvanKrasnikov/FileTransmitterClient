@@ -7,24 +7,25 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
-public class Sender {
+public class Receiver {
     private static final int BUFFER = 4096;
     private ByteBuffer buffer = ByteBuffer.allocate(BUFFER);
     private SocketChannel channel;
 
-    public Sender(SocketChannel channel){
+    public Receiver(SocketChannel channel){
         this.channel = channel;
     }
 
-    public void sendFile(List<File> files) {
+    public void receiveFile(List<File> files) { // Receive a file
         for (File file: files){
             Path path = file.toPath();
             try {
                 FileChannel fileChannel = FileChannel.open(path);
                 while (fileChannel.read(buffer) > 0) {
                     buffer.flip();
-                    fileChannel.write(buffer);
+                    fileChannel.read(buffer);
                     buffer.clear();
                 }
                 fileChannel.close();
@@ -34,14 +35,27 @@ public class Sender {
         }
     }
 
-    protected void sendMessage(String message){
+    public void receiveMessage(){ // Receive a message
+        String result = "";
         try {
-            byte[] bytes =  message.getBytes();
-            buffer.get(bytes);
-            channel.write(buffer);
-            buffer.clear();
+            while (channel.read(buffer) > 0){
+                buffer.flip();
+                channel.read(buffer);
+                result += new String(buffer.array()).trim();
+                buffer.clear();
+            }
         } catch (IOException e) {
             System.err.println("Can't send message");
         }
+
+        String[] strings = result.split("\\s");
+        ConcurrentLinkedDeque<String> queue = new ConcurrentLinkedDeque<>();
+
+        for (String s: strings){
+            queue.push(s);
+        }
+
+        MessageHandler handler = new MessageHandler();
+        handler.parseMessage(queue);
     }
 }
