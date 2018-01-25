@@ -1,7 +1,6 @@
 package controllers;
 
-import client.FileEntry;
-import client.Sender;
+import client.format.FileEntry;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
@@ -22,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static client.Format.getFormattedDate;
-import static client.Format.getFormattedSizeOfFile;
+import static client.format.Format.getFormattedDate;
+import static client.format.Format.getFormattedSizeOfFile;
 
 public class ProgramController implements Initializable{
     private TreeItem<FileEntry> itemRoot = new TreeItem<>();
@@ -63,9 +62,7 @@ public class ProgramController implements Initializable{
 
     @FXML
     private void send(){ // вызов метода передачи файлов
-        Sender sender = new Sender();
-        sender.sendFile(prepList);
-        prepList.clear();
+
     }
 
     @FXML
