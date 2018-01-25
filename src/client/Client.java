@@ -26,7 +26,7 @@ public class Client  {
             channel.register(selector, SelectionKey.OP_CONNECT, SelectionKey.OP_READ);
             if (channel.isConnected()){
                 MessageHandler messageHandler = new MessageHandler();
-                while (!isAuthentified){
+                while (true){
                     messageHandler.parseMessage(receiveMessage());
                 }
             }
