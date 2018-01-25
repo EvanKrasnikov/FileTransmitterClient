@@ -1,6 +1,7 @@
 package client;
 
 import client.sync.Receiver;
+import client.sync.Sender;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -24,7 +25,6 @@ public class Client  {
             channel.connect(new InetSocketAddress(ADRESS,PORT));
             channel.register(selector, SelectionKey.OP_CONNECT, SelectionKey.OP_READ);
             if (channel.isConnected()){
-                new Hub(channel);
                 Receiver receiver = new Receiver(channel);
                 while (!terminateConnection){
                     receiver.receiveMessage();
@@ -35,7 +35,16 @@ public class Client  {
         }
     }
 
+    public void sendMessage(String message){
+        Sender sender = new Sender(channel);
+        sender.sendMessage(message);
+    }
+
     protected void setIsAuthentified(Boolean isAuthentified){
         this.isAuthentified = isAuthentified;
+    }
+
+    public SocketChannel getChannel() {
+        return channel;
     }
 }
