@@ -30,7 +30,7 @@ public class Client  {
                 Sender sender = new Sender(channel);
                 Receiver receiver = new Receiver(channel);
                 while (!terminateConnection){
-
+                    receiver.receiveMessage();
                 }
             }
         } catch (IOException e) {
