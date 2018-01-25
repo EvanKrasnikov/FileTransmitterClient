@@ -1,8 +1,6 @@
 package client;
 
-import client.sync.MessageHandler;
 import client.sync.Receiver;
-import client.sync.Sender;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -26,21 +24,18 @@ public class Client  {
             channel.connect(new InetSocketAddress(ADRESS,PORT));
             channel.register(selector, SelectionKey.OP_CONNECT, SelectionKey.OP_READ);
             if (channel.isConnected()){
-                MessageHandler messageHandler = new MessageHandler();
-                Sender sender = new Sender(channel);
+                new Hub(channel);
                 Receiver receiver = new Receiver(channel);
                 while (!terminateConnection){
                     receiver.receiveMessage();
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Client can't connect to the server");
         }
     }
 
     protected void setIsAuthentified(Boolean isAuthentified){
         this.isAuthentified = isAuthentified;
     }
-
-
 }
