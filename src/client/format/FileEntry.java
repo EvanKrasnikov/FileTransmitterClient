@@ -1,27 +1,29 @@
 package client.format;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class FileEntry extends RecursiveTreeObject<FileEntry> {
-    private String fileName;
-    private String size;
-    private String editionTime;
+    private StringProperty fileName;
+    private StringProperty size;
+    private StringProperty editionTime;
 
     public FileEntry(String fileName, String size, String editionTime) {
-        this.fileName = fileName ;
-        this.size = size;
-        this.editionTime = editionTime;
+        this.fileName = new SimpleStringProperty(fileName) ;
+        this.size = new SimpleStringProperty(size);
+        this.editionTime = new SimpleStringProperty(editionTime);
     }
 
-    public String getFileName() {
+    public StringProperty getFileNameProperty() {
         return fileName;
     }
 
-    public String getSize() {
+    public StringProperty getSizeProperty() {
         return size;
     }
 
-    public String getEditionTime() {
+    public StringProperty getEditionTimeProperty() {
         return editionTime;
     }
 }

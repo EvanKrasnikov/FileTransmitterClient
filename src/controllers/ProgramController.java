@@ -5,7 +5,10 @@ import client.format.FileEntry;
 
 import client.sync.Sender;
 import com.jfoenix.controls.*;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +32,6 @@ import static client.format.Format.getFormattedDate;
 import static client.format.Format.getFormattedSizeOfFile;
 
 public class ProgramController extends Client implements Initializable{
-    private TreeItem<FileEntry> itemRoot = new TreeItem<>();
     private List<File> prepList = new ArrayList<>();
 
     @FXML
@@ -46,21 +49,20 @@ public class ProgramController extends Client implements Initializable{
 
     @FXML
     private void add(ActionEvent event) throws IOException{ // добавление файлов в таблицу для отображения
-        tableView.setRoot(itemRoot);
-        tableView.setShowRoot(false);
-        tableView.setEditable(false);
-
         FileChooser chooser = new FileChooser();
         List<File> files = chooser.showOpenMultipleDialog(tableView.getScene().getWindow());
+        ObservableList<FileEntry> entries = FXCollections.observableArrayList();
         prepList.addAll(files);
 
         for (File f: files){
-            FileEntry fileEntry = new FileEntry(f.getName(),getFormattedSizeOfFile(f.length()),getFormattedDate(f.lastModified()));
-            TreeItem<FileEntry> item = new TreeItem<>(fileEntry);
-            itemRoot.getChildren().add(item);
-            System.out.println(fileEntry.getFileName() + " " + fileEntry.getSize() + " " + fileEntry.getEditionTime());
-            System.out.println(itemRoot.getChildren().toString());
+            entries.add(new FileEntry(f.getName(),getFormattedSizeOfFile(f.length()),getFormattedDate(f.lastModified())));
         }
+
+        final TreeItem<FileEntry> root = new RecursiveTreeItem<FileEntry>(entries, RecursiveTreeObject::getChildren);
+
+        tableView.setRoot(root);
+        tableView.setShowRoot(false);
+        tableView.setEditable(false);
     }
 
     @FXML
@@ -79,26 +81,26 @@ public class ProgramController extends Client implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) { // загрузка столбцов
-        tableView.getColumns().addAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
+        tableView.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
     }
 
     private static TreeTableColumn<FileEntry, String> getNameColumn(){
         JFXTreeTableColumn<FileEntry, String> nameColumn = new JFXTreeTableColumn<>("Name");
-        nameColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("Name"));
+        nameColumn.setCellValueFactory(param -> param.getValue().getValue().getFileNameProperty());
         nameColumn.setPrefWidth(300);
         return nameColumn;
     }
 
     private static TreeTableColumn<FileEntry, String> getSizeColumn(){
         JFXTreeTableColumn<FileEntry, String> sizeColumn = new JFXTreeTableColumn<>("Size");
-        sizeColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("Size"));
+        sizeColumn.setCellValueFactory(param -> param.getValue().getValue().getSizeProperty());
         sizeColumn.setPrefWidth(100);
         return sizeColumn;
     }
 
     private static TreeTableColumn<FileEntry, String> getEditionTimeColumn(){
         JFXTreeTableColumn<FileEntry, String> editionTimeColumn = new JFXTreeTableColumn<>("Last change");
-        editionTimeColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("Time"));
+        editionTimeColumn.setCellValueFactory(param -> param.getValue().getValue().getEditionTimeProperty());
         editionTimeColumn.setPrefWidth(200);
         return editionTimeColumn;
     }
