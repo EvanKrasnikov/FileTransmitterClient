@@ -33,6 +33,7 @@ import static client.format.Format.getFormattedSizeOfFile;
 
 public class ProgramController extends Client implements Initializable{
     private List<File> prepList = new ArrayList<>();
+    private HamburgerSlideCloseTransition burgerTask;
 
     @FXML
     private AnchorPane menuPanel;
@@ -73,8 +74,6 @@ public class ProgramController extends Client implements Initializable{
 
     @FXML
     private void showMenu(MouseEvent event){
-        HamburgerSlideCloseTransition burgerTask = new HamburgerSlideCloseTransition(humburger);
-        burgerTask.setRate(-1);
         burgerTask.setRate(burgerTask.getRate() * -1);
         burgerTask.play();
     }
@@ -82,6 +81,8 @@ public class ProgramController extends Client implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) { // загрузка столбцов
         tableView.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
+        burgerTask = new HamburgerSlideCloseTransition(humburger);
+        burgerTask.setRate(-1);
     }
 
     private static TreeTableColumn<FileEntry, String> getNameColumn(){
