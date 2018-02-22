@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/libs/jfoenix-8.0.1.jar!/" />
       <root url="jar://$USER_HOME$/Java_libs/JFoenix/jfoenix.jar!/" />
+      <root url="jar://$USER_HOME$/Java_libs/ControlsFx/controlsfx-8.40.14.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
