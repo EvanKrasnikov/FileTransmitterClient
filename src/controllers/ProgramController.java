@@ -1,25 +1,24 @@
 package controllers;
 
 import client.Client;
-import client.format.FileEntry;
+import utils.FileEntry;
 
-import client.sync.Sender;
+import client.Sender;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
-import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,11 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static client.format.Format.getFormattedDate;
-import static client.format.Format.getFormattedSizeOfFile;
+import static utils.Format.getFormattedDate;
+import static utils.Format.getFormattedSizeOfFile;
 
 public class ProgramController extends Client implements Initializable{
-    private List<File> prepList = new ArrayList<>();
     private HamburgerSlideCloseTransition burgerTask;
 
     @FXML
@@ -52,14 +50,16 @@ public class ProgramController extends Client implements Initializable{
     private void add(ActionEvent event) throws IOException{ // добавление файлов в таблицу для отображения
         FileChooser chooser = new FileChooser();
         List<File> files = chooser.showOpenMultipleDialog(tableView.getScene().getWindow());
+        listToTableView(files);
+    }
+
+    private void listToTableView(List<File> files){
         ObservableList<FileEntry> entries = FXCollections.observableArrayList();
-        prepList.addAll(files);
 
-        for (File f: files){
+        for (File f: files)
             entries.add(new FileEntry(f.getName(),getFormattedSizeOfFile(f.length()),getFormattedDate(f.lastModified())));
-        }
 
-        final TreeItem<FileEntry> root = new RecursiveTreeItem<FileEntry>(entries, RecursiveTreeObject::getChildren);
+        final TreeItem<FileEntry> root = new RecursiveTreeItem<>(entries, RecursiveTreeObject::getChildren);
 
         tableView.setRoot(root);
         tableView.setShowRoot(false);
@@ -69,7 +69,7 @@ public class ProgramController extends Client implements Initializable{
     @FXML
     private void send(){ // вызов метода передачи файлов
         Sender sender = new Sender(super.getChannel());
-        sender.sendFile(prepList);
+        //sender.sendFile(prepList);
     }
 
     @FXML
@@ -104,5 +104,14 @@ public class ProgramController extends Client implements Initializable{
         editionTimeColumn.setCellValueFactory(param -> param.getValue().getValue().getEditionTimeProperty());
         editionTimeColumn.setPrefWidth(200);
         return editionTimeColumn;
+    }
+
+    private void handleDragOver(DragEvent event){
+        if (event.getDragboard().hasFiles())
+            event.acceptTransferModes(TransferMode.ANY);
+    }
+
+    private void handleDrop(DragEvent event){
+        listToTableView(event.getDragboard().getFiles());
     }
 }
