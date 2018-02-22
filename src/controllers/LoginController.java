@@ -8,9 +8,12 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.net.URL;
@@ -80,5 +83,15 @@ public class LoginController extends Client {
         //todo
         loginField.setPromptText(loginField.getText());
         passField.setPromptText(passField.getText());
+    }
+
+    public static void showNotification(String str){
+        Notifications.create()
+                .text("Warning!")
+                .text(str)
+                .graphic(null)
+                .hideAfter(Duration.seconds(5))
+                .position(Pos.BOTTOM_RIGHT)
+                .showInformation();
     }
 }
