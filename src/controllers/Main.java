@@ -20,7 +20,6 @@ public class Main extends Application {
         new Client();
     }
 
-
     public static void main(String[] args) {
         launch(args);
     }
