@@ -3,7 +3,6 @@ package controllers;
 import client.Client;
 import utils.FileEntry;
 
-import client.Sender;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
@@ -23,7 +22,6 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,6 +30,7 @@ import static utils.Format.getFormattedSizeOfFile;
 
 public class ProgramController extends Client implements Initializable{
     private HamburgerSlideCloseTransition burgerTask;
+    private ObservableList<FileEntry> entries;
 
     @FXML
     private AnchorPane menuPanel;
@@ -54,8 +53,6 @@ public class ProgramController extends Client implements Initializable{
     }
 
     private void listToTableView(List<File> files){
-        ObservableList<FileEntry> entries = FXCollections.observableArrayList();
-
         for (File f: files)
             entries.add(new FileEntry(f.getName(),getFormattedSizeOfFile(f.length()),getFormattedDate(f.lastModified())));
 
@@ -68,7 +65,6 @@ public class ProgramController extends Client implements Initializable{
 
     @FXML
     private void send(){ // вызов метода передачи файлов
-        Sender sender = new Sender(super.getChannel());
         //sender.sendFile(prepList);
     }
 
@@ -81,6 +77,7 @@ public class ProgramController extends Client implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) { // загрузка столбцов
         tableView.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
+        entries = FXCollections.observableArrayList();
         burgerTask = new HamburgerSlideCloseTransition(humburger);
         burgerTask.setRate(-1);
     }
@@ -106,11 +103,13 @@ public class ProgramController extends Client implements Initializable{
         return editionTimeColumn;
     }
 
+    @FXML
     private void handleDragOver(DragEvent event){
         if (event.getDragboard().hasFiles())
             event.acceptTransferModes(TransferMode.ANY);
     }
 
+    @FXML
     private void handleDrop(DragEvent event){
         listToTableView(event.getDragboard().getFiles());
     }
