@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import utils.ClientMessages;
 
 import java.io.IOException;
 import java.net.URL;
@@ -70,19 +71,19 @@ public class LoginController extends Client {
         registerButton.setVisible(false);
 
         if (loginField.getText().equals("") || passField.getText().equals("")){
-            System.out.println("Login and password fields are not filled");
+            showNotification(ClientMessages.FIELDS_NOT_FILEED);
         } else {
             if (rememberLogin.isSelected()) rememberLogin();
-            super.sendMessage("/register " + loginField.getText() + " " + passField.getText());
-            System.out.println("Welcome! " + loginField.getText());
+            sendMessage(("/register " + loginField.getText() + " " + passField.getText()).getBytes());
+            showNotification("Welcome, " + loginField.getText() + " !");
         }
     }
 
     @FXML
     private void rememberLogin(){
         //todo
-        loginField.setPromptText(loginField.getText());
-        passField.setPromptText(passField.getText());
+        //loginField.setPromptText(loginField.getText());
+        //passField.setPromptText(passField.getText());
     }
 
     public static void showNotification(String str){
