@@ -7,4 +7,5 @@ public interface ClientMessages {
     String LOGIN_IS_OCCUPIED = "Login is occupied. Enter a unique login, please ";
     String TRANSITION_COMPLETE = "Files list received";
     String GET_FILES = "List of files received";
+    String FIELDS_NOT_FILEED = "Login and password fields are not filled";
 }
