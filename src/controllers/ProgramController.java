@@ -35,7 +35,9 @@ public class ProgramController extends Client implements Initializable{
     @FXML
     private AnchorPane menuPanel;
     @FXML
-    private JFXTreeTableView<FileEntry> tableView;
+    private JFXTreeTableView<FileEntry> localFilesTable;
+    @FXML
+    private JFXTreeTableView<FileEntry> remoteFilesTable;
     @FXML
     private JFXButton addFiles;
     @FXML
@@ -48,7 +50,7 @@ public class ProgramController extends Client implements Initializable{
     @FXML
     private void add(ActionEvent event) throws IOException{ // добавление файлов в таблицу для отображения
         FileChooser chooser = new FileChooser();
-        List<File> files = chooser.showOpenMultipleDialog(tableView.getScene().getWindow());
+        List<File> files = chooser.showOpenMultipleDialog(localFilesTable.getScene().getWindow());
         listToTableView(files);
     }
 
@@ -58,9 +60,9 @@ public class ProgramController extends Client implements Initializable{
 
         final TreeItem<FileEntry> root = new RecursiveTreeItem<>(entries, RecursiveTreeObject::getChildren);
 
-        tableView.setRoot(root);
-        tableView.setShowRoot(false);
-        tableView.setEditable(false);
+        localFilesTable.setRoot(root);
+        localFilesTable.setShowRoot(false);
+        localFilesTable.setEditable(false);
     }
 
     @FXML
@@ -76,7 +78,8 @@ public class ProgramController extends Client implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) { // загрузка столбцов
-        tableView.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
+        localFilesTable.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
+        remoteFilesTable.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
         entries = FXCollections.observableArrayList();
         burgerTask = new HamburgerSlideCloseTransition(humburger);
         burgerTask.setRate(-1);

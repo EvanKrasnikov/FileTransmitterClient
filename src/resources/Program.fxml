@@ -15,7 +15,11 @@
             <JFXButton fx:id="sendFiles" buttonType="RAISED" layoutX="534.0" layoutY="13.0" onAction="#send" text="Send" />
          </children></AnchorPane>
    </top>
-   <center>
-      <JFXTreeTableView fx:id="tableView" onDragDropped="#handleDrop" onDragOver="#handleDragOver" styleClass="background" stylesheets="@stiles.css" BorderPane.alignment="CENTER" />
-   </center>
+   <left>
+      <JFXTreeTableView fx:id="localFilesTable" onDragDropped="#handleDrop" onDragOver="#handleDragOver" styleClass="background" stylesheets="@stiles.css" BorderPane.alignment="LEFT" />
+   </left>
+
+   <right>
+      <JFXTreeTableView fx:id="remoteFilesTable" styleClass="background" stylesheets="@stiles.css" BorderPane.alignment="RIGHT" />
+   </right>
 </BorderPane>
