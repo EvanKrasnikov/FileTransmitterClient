@@ -15,11 +15,15 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import utils.ClientMessages;
+import utils.Messages;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class LoginController extends Client {
+    private boolean isAuthorizationSkipped = true;
+    private Stage stage;
+
     @FXML
     private JFXButton loginButton;
     @FXML
@@ -32,37 +36,43 @@ public class LoginController extends Client {
     private JFXPasswordField passField;
 
     @FXML
-    private void loginAction(ActionEvent event) throws IOException{
-        Stage stage;
+    private void loginAction(ActionEvent event){
+        if (isAuthorizationSkipped){
+            loadProgramFXML();
+        } else {
+            if (loginField.getText().equals("") || passField.getText().equals("")){
+                showNotification("Login and password field are not filled");
+            } else {
+                sendMessage((Messages.LOGIN + " " + loginField.getText() + " " + passField.getText()).getBytes());
+
+                if (isAuthenticated){
+                    if (rememberLogin.isSelected()) rememberLogin();
+
+                    showNotification("Welcome, " + loginField.getText() + "!");
+                    loadProgramFXML();
+                } else {
+                    loginField.clear();
+                    passField.clear();
+                    showNotification("Sorry, invalid credentials!");
+                }
+            }
+        }
+    }
+
+    private void loadProgramFXML(){
         Parent root = null;
-        String sceneFile = "/resources/Program.fxml";
-        URL url  = null;
 
         //проверка загрузки FXML
-        try
-        {
-            url  = getClass().getResource( sceneFile );
-            root = FXMLLoader.load( url );
-            System.out.println( "  fxmlResource = " + sceneFile );
-        }
-        catch ( Exception ex )
-        {
-            System.out.println( "Exception on FXMLLoader.load()" );
-            System.out.println( "  * url: " + url );
-            System.out.println( "  * " + ex );
-            System.out.println( "    ----------------------------------------\n" );
-            System.out.println(ex.getMessage());
-            throw ex;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/resources/Program.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error on FXML loading!");
         }
 
-        Scene scene = new Scene(root);
         stage = (Stage) loginButton.getScene().getWindow();
-        stage.setScene(scene);
+        stage.setScene(new Scene(root));
         stage.show();
-
-
-
-
     }
 
     @FXML
@@ -74,6 +84,7 @@ public class LoginController extends Client {
             showNotification(ClientMessages.FIELDS_NOT_FILEED);
         } else {
             if (rememberLogin.isSelected()) rememberLogin();
+
             sendMessage(("/register " + loginField.getText() + " " + passField.getText()).getBytes());
             showNotification("Welcome, " + loginField.getText() + " !");
         }
