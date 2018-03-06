@@ -16,10 +16,10 @@
          </children></AnchorPane>
    </top>
    <left>
-      <JFXTreeTableView fx:id="localFilesTable" onDragDropped="#handleDrop" onDragOver="#handleDragOver" styleClass="background" stylesheets="@stiles.css" BorderPane.alignment="LEFT" />
+      <JFXTreeTableView fx:id="localFilesTable" onDragDropped="#handleDrop" onDragOver="#handleDragOver" styleClass="background" stylesheets="@stiles.css" BorderPane.alignment="CENTER_LEFT" />
    </left>
 
    <right>
-      <JFXTreeTableView fx:id="remoteFilesTable" styleClass="background" stylesheets="@stiles.css" BorderPane.alignment="RIGHT" />
+      <JFXTreeTableView fx:id="remoteFilesTable" styleClass="background" stylesheets="@stiles.css"  BorderPane.alignment="CENTER_RIGHT" />
    </right>
 </BorderPane>
