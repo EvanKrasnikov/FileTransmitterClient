@@ -101,14 +101,14 @@ public class ProgramController extends Client implements Initializable{
     private static TreeTableColumn<FileEntry, String> getNameColumn(){
         JFXTreeTableColumn<FileEntry, String> nameColumn = new JFXTreeTableColumn<>("Name");
         nameColumn.setCellValueFactory(param -> param.getValue().getValue().getFileNameProperty());
-        nameColumn.setPrefWidth(300);
+        nameColumn.setPrefWidth(290);
         return nameColumn;
     }
 
     private static TreeTableColumn<FileEntry, String> getSizeColumn(){
         JFXTreeTableColumn<FileEntry, String> sizeColumn = new JFXTreeTableColumn<>("Size");
         sizeColumn.setCellValueFactory(param -> param.getValue().getValue().getSizeProperty());
-        sizeColumn.setPrefWidth(100);
+        sizeColumn.setPrefWidth(110);
         return sizeColumn;
     }
 
