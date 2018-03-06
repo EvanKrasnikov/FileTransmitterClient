@@ -1,6 +1,7 @@
 package controllers;
 
 import client.Client;
+import client.FileSync;
 import utils.FileEntry;
 
 import com.jfoenix.controls.*;
@@ -22,6 +23,10 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -66,8 +71,16 @@ public class ProgramController extends Client implements Initializable{
     }
 
     @FXML
-    private void send(){ // вызов метода передачи файлов
-        //sender.sendFile(prepList);
+    private void send(){ // выделение файлов и передача путей на отправку
+        List<Path> list = new ArrayList<>();
+        ObservableList<TreeItem<FileEntry>> selectedItems = remoteFilesTable.getSelectionModel().getSelectedItems();
+
+        for (TreeItem<FileEntry> entry: selectedItems){
+            Path path = Paths.get(entry.getValue().getFileNameProperty().toString());
+            list.add(path);
+        }
+
+        new FileSync().sendFile(list);
     }
 
     @FXML
