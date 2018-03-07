@@ -39,9 +39,9 @@ public class ProgramController extends Client implements Initializable{
 
     @FXML
     private AnchorPane menuPanel;
-    @FXML
+
     private JFXTreeTableView<FileEntry> localFilesTable;
-    @FXML
+
     private JFXTreeTableView<FileEntry> remoteFilesTable;
     @FXML
     private JFXButton addFiles;
@@ -51,6 +51,10 @@ public class ProgramController extends Client implements Initializable{
     private JFXHamburger humburger;
     @FXML
     private BorderPane borderpane;
+    @FXML
+    private JFXTabPane tabPane;
+    private Tab localFilesTab;
+    private Tab remoteFilesTab;
 
     @FXML
     private void add(ActionEvent event) throws IOException{ // добавление файлов в таблицу для отображения
@@ -93,9 +97,25 @@ public class ProgramController extends Client implements Initializable{
     public void initialize(URL location, ResourceBundle resources) { // загрузка столбцов
         localFilesTable.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
         remoteFilesTable.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
+        loadTabs();
         entries = FXCollections.observableArrayList();
         burgerTask = new HamburgerSlideCloseTransition(humburger);
         burgerTask.setRate(-1);
+    }
+
+    private void loadTabs(){
+        tabPane = new JFXTabPane();
+        tabPane.setPrefSize(600, 350);
+
+        localFilesTab = new Tab();
+        localFilesTab.setText("Local Files");
+        localFilesTab.setContent(localFilesTable);
+
+        remoteFilesTab = new Tab();
+        remoteFilesTab.setText("Remote Files");
+        remoteFilesTab.setContent(remoteFilesTable);
+
+        tabPane.getTabs().addAll(localFilesTab,remoteFilesTab);
     }
 
     private static TreeTableColumn<FileEntry, String> getNameColumn(){
