@@ -19,6 +19,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import utils.Messages;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,27 +35,27 @@ import static utils.Format.getFormattedDate;
 import static utils.Format.getFormattedSizeOfFile;
 
 public class ProgramController extends Client implements Initializable{
+    private Tab localFilesTab;
+    private Tab remoteFilesTab;
+    private JFXTreeTableView<FileEntry> localFilesTable;
+    private JFXTreeTableView<FileEntry> remoteFilesTable;
     private HamburgerSlideCloseTransition burgerTask;
     private ObservableList<FileEntry> entries;
 
     @FXML
     private AnchorPane menuPanel;
-
-    private JFXTreeTableView<FileEntry> localFilesTable;
-
-    private JFXTreeTableView<FileEntry> remoteFilesTable;
     @FXML
     private JFXButton addFiles;
     @FXML
     private JFXButton sendFiles;
+    @FXML
+    private JFXButton downloadFiles;
     @FXML
     private JFXHamburger humburger;
     @FXML
     private BorderPane borderpane;
     @FXML
     private JFXTabPane tabPane;
-    private Tab localFilesTab;
-    private Tab remoteFilesTab;
 
     @FXML
     private void add(ActionEvent event) throws IOException{ // добавление файлов в таблицу для отображения
@@ -75,9 +76,20 @@ public class ProgramController extends Client implements Initializable{
     }
 
     @FXML
+    private void download(){ // скачивание выделенных файлов
+        ObservableList<TreeItem<FileEntry>> selectedItems = remoteFilesTable.getSelectionModel().getSelectedItems();
+        String s;
+
+        for (TreeItem<FileEntry> entry: selectedItems){
+            s = entry.toString() + " ";
+            sendMessage((Messages.GET_FILES + s).getBytes());
+        }
+    }
+
+    @FXML
     private void send(){ // выделение файлов и передача путей на отправку
         List<Path> list = new ArrayList<>();
-        ObservableList<TreeItem<FileEntry>> selectedItems = remoteFilesTable.getSelectionModel().getSelectedItems();
+        ObservableList<TreeItem<FileEntry>> selectedItems = localFilesTable.getSelectionModel().getSelectedItems();
 
         for (TreeItem<FileEntry> entry: selectedItems){
             Path path = Paths.get(entry.getValue().getFileNameProperty().toString());
@@ -96,6 +108,8 @@ public class ProgramController extends Client implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) { // загрузка столбцов
         localFilesTable.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
+        localFilesTable.addEventHandler(DragEvent.DRAG_OVER, this::handleDragOver);
+        localFilesTable.addEventHandler(DragEvent.DRAG_DROPPED, this::handleDrop);
         remoteFilesTable.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
         loadTabs();
         entries = FXCollections.observableArrayList();
@@ -139,13 +153,11 @@ public class ProgramController extends Client implements Initializable{
         return editionTimeColumn;
     }
 
-    @FXML
     private void handleDragOver(DragEvent event){
         if (event.getDragboard().hasFiles())
             event.acceptTransferModes(TransferMode.ANY);
     }
 
-    @FXML
     private void handleDrop(DragEvent event){
         listToTableView(event.getDragboard().getFiles());
     }
