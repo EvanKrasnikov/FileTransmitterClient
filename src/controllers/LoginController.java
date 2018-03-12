@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import utils.ClientMessages;
+import utils.FxmlLoader;
 import utils.Messages;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class LoginController extends Client implements Initializable {
     @FXML
     private void loginAction(ActionEvent event){
         if (isAuthorizationSkipped){
-            loadFXML(loginButton,"/resources/Program.fxml");
+            new FxmlLoader().loadFXML(loginButton,"/resources/Program.fxml");
         } else {
             if (loginField.getText().equals("") || passField.getText().equals("")){
                 showNotification("Login and password field are not filled");
@@ -52,7 +53,7 @@ public class LoginController extends Client implements Initializable {
                     if (rememberLogin.isSelected()) rememberLogin();
 
                     showNotification("Welcome, " + loginField.getText() + "!");
-                    loadFXML(loginButton,"/resources/Program.fxml");
+                    new FxmlLoader().loadFXML(loginButton,"/resources/Program.fxml");
                 } else {
                     loginField.clear();
                     passField.clear();
@@ -60,22 +61,6 @@ public class LoginController extends Client implements Initializable {
                 }
             }
         }
-    }
-
-    private void loadFXML(Node node, String fxmlPath){
-        Parent root = null;
-
-        //проверка загрузки FXML
-        try {
-            root = FXMLLoader.load(getClass().getResource(fxmlPath));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error on FXML loading!");
-        }
-
-        stage = (Stage) node.getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
     }
 
     @FXML
@@ -112,7 +97,7 @@ public class LoginController extends Client implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadFXML(loginButton,"/resources/Login.fxml");
+        new FxmlLoader().loadFXML(loginButton,"/resources/Login.fxml");
         new Client();
     }
 }
