@@ -78,12 +78,11 @@ public class ProgramController extends Client implements Initializable{
     @FXML
     private void download(){ // скачивание выделенных файлов
         ObservableList<TreeItem<FileEntry>> selectedItems = remoteFilesTable.getSelectionModel().getSelectedItems();
-        String s;
+        String s = "";
 
-        for (TreeItem<FileEntry> entry: selectedItems){
-            s = entry.toString() + " ";
-            sendMessage((Messages.GET_FILES + s).getBytes());
-        }
+        for (TreeItem<FileEntry> entry: selectedItems) s = " " + entry.toString();
+
+        sendMessage((Messages.GET_FILES + s).getBytes());
     }
 
     @FXML
