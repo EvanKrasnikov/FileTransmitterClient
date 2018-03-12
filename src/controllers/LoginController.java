@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController extends Client {
+public class LoginController extends Client implements Initializable {
     private boolean isAuthorizationSkipped = true;
     private Stage stage;
 
@@ -108,5 +108,11 @@ public class LoginController extends Client {
                 .hideAfter(Duration.seconds(5))
                 .position(Pos.BOTTOM_RIGHT)
                 .showInformation();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        loadFXML(loginButton,"/resources/Login.fxml");
+        new Client();
     }
 }
