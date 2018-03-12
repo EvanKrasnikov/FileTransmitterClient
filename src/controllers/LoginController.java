@@ -42,7 +42,7 @@ public class LoginController extends Client implements Initializable {
     @FXML
     private void loginAction(ActionEvent event){
         if (isAuthorizationSkipped){
-            new FxmlLoader().loadFXML(loginButton,"/resources/Program.fxml");
+            new ProgramController();
         } else {
             if (loginField.getText().equals("") || passField.getText().equals("")){
                 showNotification("Login and password field are not filled");
@@ -53,7 +53,7 @@ public class LoginController extends Client implements Initializable {
                     if (rememberLogin.isSelected()) rememberLogin();
 
                     showNotification("Welcome, " + loginField.getText() + "!");
-                    new FxmlLoader().loadFXML(loginButton,"/resources/Program.fxml");
+                    new ProgramController();
                 } else {
                     loginField.clear();
                     passField.clear();

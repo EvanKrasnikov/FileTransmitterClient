@@ -19,6 +19,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import utils.FxmlLoader;
 import utils.Messages;
 
 import java.io.File;
@@ -106,6 +107,7 @@ public class ProgramController extends Client implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) { // загрузка столбцов
+        new FxmlLoader().loadFXML(borderpane,"/resources/Program.fxml");
         localFilesTable.getColumns().setAll(getNameColumn(),getSizeColumn(), getEditionTimeColumn());
         localFilesTable.addEventHandler(DragEvent.DRAG_OVER, this::handleDragOver);
         localFilesTable.addEventHandler(DragEvent.DRAG_DROPPED, this::handleDrop);
