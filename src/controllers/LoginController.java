@@ -8,7 +8,9 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -19,6 +21,7 @@ import utils.Messages;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 
 public class LoginController extends Client {
     private boolean isAuthorizationSkipped = true;
@@ -38,7 +41,7 @@ public class LoginController extends Client {
     @FXML
     private void loginAction(ActionEvent event){
         if (isAuthorizationSkipped){
-            loadProgramFXML();
+            loadFXML(loginButton,"/resources/Program.fxml");
         } else {
             if (loginField.getText().equals("") || passField.getText().equals("")){
                 showNotification("Login and password field are not filled");
@@ -49,7 +52,7 @@ public class LoginController extends Client {
                     if (rememberLogin.isSelected()) rememberLogin();
 
                     showNotification("Welcome, " + loginField.getText() + "!");
-                    loadProgramFXML();
+                    loadFXML(loginButton,"/resources/Program.fxml");
                 } else {
                     loginField.clear();
                     passField.clear();
@@ -59,18 +62,18 @@ public class LoginController extends Client {
         }
     }
 
-    private void loadProgramFXML(){
+    private void loadFXML(Node node, String fxmlPath){
         Parent root = null;
 
         //проверка загрузки FXML
         try {
-            root = FXMLLoader.load(getClass().getResource("/resources/Program.fxml"));
+            root = FXMLLoader.load(getClass().getResource(fxmlPath));
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error on FXML loading!");
         }
 
-        stage = (Stage) loginButton.getScene().getWindow();
+        stage = (Stage) node.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
     }
