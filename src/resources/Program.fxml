@@ -3,10 +3,11 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ProgramController">
+<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ProgramController">
    <top>
       <AnchorPane fx:id="menuPanel" prefHeight="50.0" prefWidth="600.0" styleClass="button" stylesheets="@stiles.css" BorderPane.alignment="CENTER">
          <children>
@@ -17,6 +18,19 @@
          </children></AnchorPane>
    </top>
    <center>
-      <JFXTabPane fx:id="tabPane" BorderPane.alignment="CENTER" />
+      <JFXTabPane fx:id="tabPane">
+         <tabs>
+            <Tab id="111" fx:id="localFiles" closable="false" text="Local Files">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab fx:id="remoteFiles" closable="false" text="Remote Files">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
    </center>
 </BorderPane>
